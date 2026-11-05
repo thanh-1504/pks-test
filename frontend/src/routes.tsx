@@ -4,9 +4,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CourseDetailPage from "./pages/CourseDetailPage";
 import CoursesPage from "./pages/CoursesPage";
 import LoginPage from "./pages/LoginPage";
-import MyCoursesPage from "./pages/MyCoursesPage";
 import RegisterPage from "./pages/RegisterPage";
 import AdminCoursesPage from "./pages/admin/AdminCoursesPage";
+import MyCoursesPage from "./pages/MyCoursesPage";
 import EnrollmentsPage from "./pages/admin/EnrollmentsPage";
 
 export const router = createBrowserRouter([
