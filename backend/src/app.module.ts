@@ -10,11 +10,13 @@ import { CourseModule } from './course/course.module';
 import { MyZodValidationPipe } from './shared/configs/custom-zod-validation';
 import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 import { ShareModule } from './shared/modules/shared.module';
+import { EnrollmentModule } from './enrollment/enrollment.module';
 @Module({
   imports: [
     ShareModule,
     AuthModule,
     CourseModule,
+    EnrollmentModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
