@@ -24,7 +24,8 @@ model User {
   password    String
   role        Role        @default(STUDENT)
   createdAt   DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime      @updatedAt      @map("updated_at")
+  updatedAt   DateTime    @updatedAt      @map("updated_at")
+  deletedAt   DateTime?   @map("deleted_at")
   enrollments Enrollment[]
   @@map("users")
 }
@@ -41,6 +42,7 @@ model Course {
   isHidden          Boolean   @default(false) @map("is_hidden")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
   enrollments       Enrollment[]
   @@index([category])
   @@map("courses")
@@ -53,6 +55,8 @@ id         Int                @id @default(autoincrement())
   courseId   Int              @map("course_id")
   status     EnrollmentStatus @default(ACTIVE)
   createdAt  DateTime         @default(now()) @map("created_at")
+  updatedAt  DateTime         @updatedAt @map("updated_at")
+  deletedAt  DateTime?       @map("deleted_at")
   user       User             @relation(fields: [userId],references: [id])
   course     Course           @relation(fields: [courseId],references: [id],onDelete: Cascade)
   @@unique([userId,courseId])
