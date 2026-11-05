@@ -13,6 +13,11 @@ export class EnrollmentController {
     return this.enrollmentService.getEnrolledCourses(userId);
   }
 
+  @Get('enrollments/my')
+  getMyEnrolledCourses(@User('id') userId: number) {
+    return this.enrollmentService.getEnrolledCourses(userId);
+  }
+
   @Roles([Role.ADMIN])
   @Get('admin/courses/:id/enrollments')
   getEnrollmentsByCourse(@Param('id', ParseIntPipe) courseId: number) {
