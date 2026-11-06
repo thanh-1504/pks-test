@@ -28,10 +28,10 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'studentkps@mail.com' },
+    where: { email: 'studentpks@mail.com' },
     create: {
       fullName: 'Student PKS',
-      email: 'studentkps@mail.com',
+      email: 'studentpks@mail.com',
       password: userPassword,
       role: Role.STUDENT,
     },
