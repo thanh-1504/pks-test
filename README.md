@@ -22,15 +22,15 @@ pks-test/
 
 ## Yêu cầu môi trường
 
-- Node.js `18.18.0` trở lên
-- PostgreSQL `17.4`
+- Node.js `20.19.0` trở lên hoặc `22.12.0` trở lên
+- PostgreSQL `17` (hoặc phiên bản tương thích)
 - npm
 
 ## Cài đặt và chạy
 
 ### 1. Cấu hình Database
 
-Tạo database trống trong PostgreSQL:
+Tạo database trong PostgreSQL:
 
 ```sql
 CREATE DATABASE pks_db;
@@ -38,28 +38,33 @@ CREATE DATABASE pks_db;
 
 ### 2. Backend
 
+Từ thư mục gốc của project:
+
 ```bash
 cd backend
 cp .env.example .env
 ```
 
-Mở `backend/.env` và điền giá trị thật (**kiểm tra lại cho khớp `.env.example`**):
+Mở `backend/.env`, cập nhật thông tin kết nối PostgreSQL và thay các giá trị JWT mẫu bằng chuỗi bí mật riêng:
 
 ```env
 DATABASE_URL="postgresql://<user>:<password>@localhost:5432/pks_db?schema=public"
 JWT_SECRET="<chuỗi bí mật>"
-JWT_ACCESS_TOKEN_EXPIRES_IN="1h"
+JWT_ACCESS_TOKEN_EXPIRES_IN="15m"
 JWT_REFRESH_SECRET="<chuỗi bí mật>"
 JWT_REFRESH_TOKEN_EXPIRES_IN="7d"
+ADMIN_PASSWORD_DEFAULT="123456"
+USER_PASSWORD_DEFAULT="123456"
 PORT=3000
 ```
 
-Cài thư viện, tạo bảng và dữ liệu mẫu, rồi chạy server:
+Cài thư viện, chạy migration, tạo dữ liệu mẫu và khởi động server. Hai biến
+`ADMIN_PASSWORD_DEFAULT` và `USER_PASSWORD_DEFAULT` là mật khẩu được tạo cho
+các tài khoản demo bên dưới; hãy đổi chúng nếu muốn dùng mật khẩu khác:
 
 ```bash
 npm install
 npx prisma migrate dev
-npx prisma generate
 npx prisma db seed
 npm run start:dev
 ```
@@ -68,17 +73,23 @@ Backend chạy tại `http://localhost:3000`.
 
 ### 3. Frontend
 
+Mở terminal mới từ thư mục gốc của project:
+
 ```bash
 cd frontend
-cp .env.example .env
 npm install
-npm run dev
 ```
 
-`frontend/.env` (**kiểm tra lại tên biến**):
+Tạo file `frontend/.env` với nội dung:
 
 ```env
 VITE_API_URL=http://localhost:3000
+```
+
+Sau đó khởi động frontend:
+
+```bash
+npm run dev
 ```
 
 Frontend chạy tại `http://localhost:5173`.
