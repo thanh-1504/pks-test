@@ -53,7 +53,7 @@ export default function LoginPage() {
             </label>
             <input
               type="email"
-              placeholder="ví dụ: studentpks@mail.com"
+              placeholder="studentpks@mail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

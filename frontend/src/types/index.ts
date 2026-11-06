@@ -25,6 +25,15 @@ export interface Course {
   createdAt: string; 
 }
 
+export interface CourseForm {
+  name: string;
+  category: string;
+  instructor: string;
+  description: string;
+  tuition: string;
+  capacity: string;
+}
+
 export interface MyEnrollment {
   id: number;
   status: EnrollmentStatus;
