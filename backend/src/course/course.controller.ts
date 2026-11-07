@@ -22,7 +22,6 @@ export class CourseController {
   @Public()
   @Get('courses')
   getCourses(@Query() query: CourseQueryDTO) {
-    console.log(query);
     return this.courseService.getCourses(query);
   }
 
