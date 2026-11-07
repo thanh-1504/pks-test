@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../stores/auth.store";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3000",
 });
 
 const plainAxios = axios.create({
@@ -58,7 +58,7 @@ api.interceptors.response.use(
     try {
       const res = await plainAxios.post<{ accessToken: string }>(
         "/auth/refresh-token",
-        { refreshToken }
+        { refreshToken },
       );
       const newToken = res.data.accessToken;
 
@@ -73,7 +73,7 @@ api.interceptors.response.use(
     } finally {
       isRefreshing = false;
     }
-  }
+  },
 );
 
 export default api;
