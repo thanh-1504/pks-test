@@ -101,14 +101,23 @@ Frontend chạy tại `http://localhost:5173`.
 | Admin | `adminpks@mail.com` | `123456` |
 | Student | `studentpks@mail.com` | `123456` |
 
+## Demo trên môi trường deploy
+
+- **Frontend:** https://test-pks.netlify.app/
+- **Backend/API:** https://pks-test.onrender.com (ví dụ: `/courses`)
+
+> Backend chạy trên Render gói miễn phí nên lần truy cập đầu có thể mất 30-60 giây để khởi động, vui lòng chờ rồi thử lại.
+
+## Kiểm thử API (Postman)
+
+Import `docs/PKS TEST.postman_collection.json` và `docs/PKS.postman_environment.json`, đặt biến `base_url` thành `http://localhost:3000` hoặc `https://pks-test.onrender.com`.
+
 
 ## Chức năng
 
 **Student:** đăng ký, đăng nhập, đăng xuất; xem danh sách khóa học dạng thẻ, tìm theo tên, lọc theo danh mục; xem chi tiết và ghi danh; xem "Khóa học của tôi".
 
 **Admin:** thêm, sửa, ẩn/hiện, xóa mềm khóa học, cấu hình sĩ số tối đa; xem danh sách học viên đã ghi danh của từng khóa.
-
-**Giao diện:** responsive desktop và mobile, có Loading, Empty State, Error State, nút disabled khi submit, thông báo bằng Toast.
 
 ## Tóm tắt API
 
