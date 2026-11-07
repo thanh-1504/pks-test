@@ -301,79 +301,157 @@ export default function AdminCoursesPage() {
             <EmptyState message="Chưa có khóa học nào" />
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm">
-            <table className="w-full min-w-[760px] text-left text-sm">
-              <thead className="bg-gray-50 text-gray-600">
-                <tr>
-                  <th className="px-4 py-3 font-medium">Khóa học</th>
-                  <th className="px-4 py-3 font-medium">Giảng viên</th>
-                  <th className="px-4 py-3 font-medium">Học phí</th>
-                  <th className="px-4 py-3 font-medium">Sĩ số</th>
-                  <th className="px-4 py-3 font-medium">Trạng thái</th>
-                  <th className="px-4 py-3 font-medium">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {courses.map((course) => (
-                  <tr key={course.id} className="text-gray-700">
-                    <td className="px-4 py-4">
-                      <p className="font-medium text-gray-900">
-                        {course.name}
-                      </p>
-                      <p className="mt-1 text-xs text-gray-500">
+          <>
+            {/* Desktop: table */}
+            <div className="hidden overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm md:block">
+              <table className="w-full min-w-[760px] text-left text-sm">
+                <thead className="bg-gray-50 text-gray-600">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Khóa học</th>
+                    <th className="px-4 py-3 font-medium">Giảng viên</th>
+                    <th className="px-4 py-3 font-medium">Học phí</th>
+                    <th className="px-4 py-3 font-medium">Sĩ số</th>
+                    <th className="px-4 py-3 font-medium">Trạng thái</th>
+                    <th className="px-4 py-3 font-medium">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {courses.map((course) => (
+                    <tr key={course.id} className="text-gray-700">
+                      <td className="px-4 py-4">
+                        <p className="font-medium text-gray-900">
+                          {course.name}
+                        </p>
+                        <p className="mt-1 text-xs text-gray-500">
+                          {course.category}
+                        </p>
+                      </td>
+                      <td className="px-4 py-4">{course.instructor}</td>
+                      <td className="whitespace-nowrap px-4 py-4">
+                        {formatTuition(course.tuition)} đ
+                      </td>
+                      <td className="px-4 py-4">
+                        {course.enrolledCount} / {course.capacity}
+                      </td>
+                      <td className="px-4 py-4">
+                        <span
+                          className={`rounded-full px-3 py-1 text-xs font-medium ${
+                            course.isHidden
+                              ? "bg-gray-100 text-gray-600"
+                              : "bg-green-100 text-green-700"
+                          }`}
+                        >
+                          {course.isHidden ? "Đang ẩn" : "Đang hiển thị"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => openEditForm(course)}
+                            className="inline-flex items-center gap-1 rounded-md border border-gray-300 px-2.5 py-1.5 text-xs font-medium hover:bg-gray-50"
+                          >
+                            <Pencil size={14} />
+                            Sửa
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void toggleHidden(course)}
+                            className="rounded-md border border-gray-300 px-2.5 py-1.5 text-xs font-medium hover:bg-gray-50"
+                          >
+                            {course.isHidden ? "Hiện" : "Ẩn"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void deleteCourse(course)}
+                            className="inline-flex items-center gap-1 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 size={14} />
+                            Xóa
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile: card list */}
+            <div className="space-y-3 md:hidden">
+              {courses.map((course) => (
+                <article
+                  key={course.id}
+                  className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium text-blue-600">
                         {course.category}
                       </p>
-                    </td>
-                    <td className="px-4 py-4">{course.instructor}</td>
-                    <td className="px-4 py-4">
-                      {formatTuition(course.tuition)} đ
-                    </td>
-                    <td className="px-4 py-4">
-                      {course.enrolledCount} / {course.capacity}
-                    </td>
-                    <td className="px-4 py-4">
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-medium ${
-                          course.isHidden
-                            ? "bg-gray-100 text-gray-600"
-                            : "bg-green-100 text-green-700"
-                        }`}
-                      >
-                        {course.isHidden ? "Đang ẩn" : "Đang hiển thị"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-4">
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => openEditForm(course)}
-                          className="inline-flex items-center gap-1 rounded-md border border-gray-300 px-2.5 py-1.5 text-xs font-medium hover:bg-gray-50"
-                        >
-                          <Pencil size={14} />
-                          Sửa
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => void toggleHidden(course)}
-                          className="rounded-md border border-gray-300 px-2.5 py-1.5 text-xs font-medium hover:bg-gray-50"
-                        >
-                          {course.isHidden ? "Hiện" : "Ẩn"}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => void deleteCourse(course)}
-                          className="inline-flex items-center gap-1 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
-                        >
-                          <Trash2 size={14} />
-                          Xóa
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      <h3 className="mt-1 break-words font-semibold text-gray-900">
+                        {course.name}
+                      </h3>
+                    </div>
+                    <span
+                      className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${
+                        course.isHidden
+                          ? "bg-gray-100 text-gray-600"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {course.isHidden ? "Đang ẩn" : "Đang hiển thị"}
+                    </span>
+                  </div>
+
+                  <p className="mt-3 text-sm text-gray-600">
+                    Giảng viên: {course.instructor}
+                  </p>
+
+                  <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-gray-100 pt-3 text-sm">
+                    <div>
+                      <dt className="text-xs text-gray-500">Học phí</dt>
+                      <dd className="mt-1 whitespace-nowrap font-semibold text-gray-900">
+                        {formatTuition(course.tuition)} đ
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs text-gray-500">Sĩ số</dt>
+                      <dd className="mt-1 font-medium text-gray-900">
+                        {course.enrolledCount} / {course.capacity}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => openEditForm(course)}
+                      className="inline-flex items-center gap-1 rounded-md border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                    >
+                      <Pencil size={14} />
+                      Sửa
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void toggleHidden(course)}
+                      className="rounded-md border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                    >
+                      {course.isHidden ? "Hiện" : "Ẩn"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void deleteCourse(course)}
+                      className="inline-flex items-center gap-1 rounded-md border border-red-200 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50"
+                    >
+                      <Trash2 size={14} />
+                      Xóa
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </>
         ))}
     </div>
   );
